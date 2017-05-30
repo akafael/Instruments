@@ -8,7 +8,7 @@ if __name__ == "__main__":
 
 
     # Initialize our scope
-    test = instrument.TekScope1000("/dev/usbtmc0")
+    test = instrument.TekScope1000("/dev/usbtmc2")
 
     # Stop data acquisition
     test.write("ACQ:STATE STOP")
