@@ -46,17 +46,16 @@ class TekScope1000:
         """Reset the instrument"""
         self.meas.sendReset()
 
-    def read_data(self,length = 100):
+    def read_data(self):
         """ Function for reading data and parsing binary into numpy array """
         self.write("CURV?")
         rawdata = self.read(9000)
 
         # First few bytes are characters to specify
         # the length of the transmission. Need to strip these off:
-        # we'll assume a 5000-byte transmission so the string would be "#45000".
-        # That mean that next 4 digit are the size of transmission,
-        # and we therefor strip 6 bytes ('#' + '4' + '5000').
-        return numpy.frombuffer(rawdata,offset=2+int(rawdata[1]),count = length)
+        # we'll assume a 5000-byte transmission
+        # so the string would be "#45000" and we therefor strip 6 bytes.
+        return numpy.frombuffer(rawdata[6:-1], 'i2')
 
 
     def get_data(self,source):
